@@ -42,3 +42,7 @@ fib :: Int -> Int
 fib 0 = 0
 fib 1 = 1
 fib n = fib (n-1) + fib (n-2)
+
+init' :: [a] -> [a]
+init' [_] = []
+init' (x:xs) = x:(init' xs)
