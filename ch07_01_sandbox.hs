@@ -37,8 +37,22 @@ foldr' :: (a -> b -> b) -> b -> [a] -> b
 foldr' _ v [] = v
 foldr' f v (x:xs) = x `f` foldr' f v xs -- f x (foldr' f v xs)
 
+-- foldr' (+) 0 [1,2]
+-- (+ 1 (foldr' (+) 0 [2]))
+-- (+ 1 (+ 2 + (foldr' (+) 0 [])))
+-- (+ 1 (+ 2 + (0)))
+
 length' :: [a] -> Int
 length' = foldr (\_ n -> n+1) 0
 
 reverse' :: [a] -> [a]
 reverse' = foldr (\x xs -> xs ++ [x]) []
+
+foldl' :: (a -> b -> a) -> a -> [b] -> a
+foldl' _ v [] = v
+foldl' f v (x:xs) = foldl f (f v x) xs
+
+-- foldl' (+) 0 [1,2]
+-- (+ (foldl' (+) 0 [1]) 2)
+-- (+ (+ (foldl' (+) 0 []) 1) 2)
+-- (+ (+ 0 1) 2)
