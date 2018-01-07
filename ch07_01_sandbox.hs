@@ -18,3 +18,27 @@ filter'' p (x:xs) | p x = x : filter p xs
 sumsqreven :: [Int] -> Int
 sumsqreven xs = sum (map (^2) (filter even xs))
 
+-- Defining functions with foldr
+
+sum' :: Num a => [a] -> a
+sum' = foldr (+) 0
+
+product' :: Num a => [a] -> a
+product' = foldr (*) 1
+
+or' :: [Bool] -> Bool
+or' = foldr (||) False
+
+and' :: [Bool] -> Bool
+and' = foldr (&&) True
+
+-- Defining recursive foldr'
+foldr' :: (a -> b -> b) -> b -> [a] -> b
+foldr' _ v [] = v
+foldr' f v (x:xs) = x `f` foldr' f v xs -- f x (foldr' f v xs)
+
+length' :: [a] -> Int
+length' = foldr (\_ n -> n+1) 0
+
+reverse' :: [a] -> [a]
+reverse' = foldr (\x xs -> xs ++ [x]) []
