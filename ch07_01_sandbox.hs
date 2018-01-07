@@ -56,3 +56,24 @@ foldl' f v (x:xs) = foldl f (f v x) xs
 -- (+ (foldl' (+) 0 [1]) 2)
 -- (+ (+ (foldl' (+) 0 []) 1) 2)
 -- (+ (+ 0 1) 2)
+
+-- Function composition
+
+odd' :: Int -> Bool
+odd' x = not (even x)
+
+odd'' :: Int -> Bool
+odd'' = not . even
+
+twice :: (a -> a) -> a -> a
+twice f x = f (f x)
+
+twice' :: (a -> a) -> a -> a
+twice' f = f . f
+
+sumsqreven' :: [Int] -> Int
+sumsqreven' = sum . map (^2) . filter even
+
+compose :: [a -> a] -> (a -> a)
+compose = foldr (.) id
+
