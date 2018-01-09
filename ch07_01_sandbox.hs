@@ -86,3 +86,13 @@ type Bit = Int
 bin2int :: [Bit] -> Int
 bin2int = foldr (\x y -> x + 2 * y) 0
 
+int2bin :: Int -> [Bit]
+int2bin n | divider > 0 = renainder : (int2bin divider)
+          | otherwise = [renainder]
+          where
+            divider = div n 2
+            renainder = mod n 2
+
+int2bin' :: Int -> [Bit]
+int2bin' 0 = []
+int2bin' n = n `mod` 2 : int2bin' (n `div` 2)
