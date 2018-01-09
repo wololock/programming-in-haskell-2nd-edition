@@ -1,5 +1,7 @@
 module Chapter_07 where
 
+import Data.Char
+
 map' :: (a -> b) -> [a] -> [b]
 map' f xs = [f x | x <- xs]
 
@@ -77,3 +79,11 @@ sumsqreven' = sum . map (^2) . filter even
 compose :: [a -> a] -> (a -> a)
 compose = foldr (.) id
 
+-- Binary String Transmitter example
+
+type Bit = Int
+
+bin2int :: [Bit] -> Int
+bin2int bits = sum [w * b | (w,b) <- zip weights bits]
+               where
+                 weights = iterate (*2) 1
