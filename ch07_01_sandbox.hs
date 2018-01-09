@@ -96,3 +96,6 @@ int2bin n | divider > 0 = renainder : (int2bin divider)
 int2bin' :: Int -> [Bit]
 int2bin' 0 = []
 int2bin' n = n `mod` 2 : int2bin' (n `div` 2)
+
+make8 :: [Bit] -> [Bit]
+make8 bits = take 8 (bits ++ repeat 0)
