@@ -121,3 +121,7 @@ transmit = decode . channel . encode
 count :: Eq a => a -> [a] -> Int
 count x = length . filter (== x)
 
+rmdups :: Eq a => [a] -> [a]
+rmdups [] = []
+rmdups (x:xs) = x : (rmdups $ filter (/= x) xs)
+
