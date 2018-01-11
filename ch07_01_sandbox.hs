@@ -115,3 +115,9 @@ channel = id
 
 transmit :: String -> String
 transmit = decode . channel . encode
+
+-- Voting alghorithms
+
+count :: Eq a => a -> [a] -> Int
+count x = length . filter (== x)
+
