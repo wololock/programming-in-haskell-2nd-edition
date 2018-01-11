@@ -1,6 +1,7 @@
 module Chapter_07 where
 
 import Data.Char
+import Data.List
 
 map' :: (a -> b) -> [a] -> [b]
 map' f xs = [f x | x <- xs]
@@ -124,4 +125,9 @@ count x = length . filter (== x)
 rmdups :: Eq a => [a] -> [a]
 rmdups [] = []
 rmdups (x:xs) = x : (rmdups $ filter (/= x) xs)
+
+votes = ["Red", "Blue", "Green", "Blue", "Blue", "Red"]
+
+result :: Ord a => [a] -> [(Int,a)]
+result vs = sort [(count v vs, v) | v <- rmdups vs]
 
