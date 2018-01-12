@@ -33,3 +33,25 @@ map' f = foldr (\x xs -> (f x):xs) []
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' p = foldr (\x xs -> if p x then x:xs else xs) []
+
+-- Ex. 4
+dec2int :: [Int] -> Int
+dec2int = foldl (\x y -> 10 * x + y) 0
+
+-- dec2int [2,4,3,1] == 2431
+-- f = (\x y -> 10 * x + y)
+-- foldl f 0 [2,4,3,1]
+-- foldl f (f 0 2) [4,3,1]
+-- foldl f (f (f 0 2) 4) [3,1]
+-- foldl f (f (f (f 0 2) 4) 3) [1]
+-- foldl f (f (f (f (f 0 2) 4) 3) 1) []
+-- (f (f (f (f 0 2) 4) 3) 1)
+-- (f (f (f (10 * 0 + 2) 4) 3) 1)
+-- (f (f (f 2 4) 3) 1)
+-- (f (f (10 * 2 + 4) 3) 1)
+-- (f (f 24 3) 1)
+-- (f (10 * 24 + 3) 1)
+-- (f 243 1)
+-- (10 * 243 + 1)
+-- 2431
+
