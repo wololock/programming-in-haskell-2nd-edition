@@ -68,3 +68,19 @@ curry' f a b = f (a,b)
 
 uncurry' :: (a -> b -> c) -> (a,b) -> c
 uncurry' f (a,b) = f a b
+
+-- Ex. 6
+unfold :: (a -> Bool) -> (a -> b) -> (a -> a) -> a -> [b]
+unfold p h t x | p x = []
+               | otherwise = h x : unfold p h t (t x)
+
+int2bin :: Integer -> [Integer]
+int2bin = unfold (== 0) (`mod` 2) (`div` 2)
+
+-- map'' (*2) [1,2,3,4] ==> [2,4,6,8]
+map'' :: (a -> b) -> [a] -> [b]
+map'' f = unfold null (f . head) tail
+
+-- take 5 $ iterate'' (+1) 0 ==> [0,1,2,3,4]
+iterate'' :: (a -> a) -> a -> [a]
+iterate'' f = unfold (\x -> False) id f
