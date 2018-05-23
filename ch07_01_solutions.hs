@@ -55,3 +55,16 @@ dec2int = foldl (\x y -> 10 * x + y) 0
 -- (10 * 243 + 1)
 -- 2431
 
+
+ -- Ex. 5
+add :: Num a => (a,a) -> a
+add (x,y) = x + y 
+
+add' :: Num a => a -> a -> a
+add' x y = x + y
+
+curry' :: ((a,b) -> c) -> a -> b -> c
+curry' f a b = f (a,b)
+
+uncurry' :: (a -> b -> c) -> (a,b) -> c
+uncurry' f (a,b) = f a b
