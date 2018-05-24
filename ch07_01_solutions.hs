@@ -84,3 +84,10 @@ map'' f = unfold null (f . head) tail
 -- take 5 $ iterate'' (+1) 0 ==> [0,1,2,3,4]
 iterate'' :: (a -> a) -> a -> [a]
 iterate'' f = unfold (\x -> False) id f
+
+-- Ex. 9
+altMap :: (a -> b) -> (a -> b) -> [a] -> [b]
+altMap f h = map (\x -> if even (fst x) then f (snd x) else h (snd x)) . zip (iterate (+1) 0) 
+
+-- > altMap (+10) (+100) [5,4,3,2,1]
+-- > [15,104,13,102,11]
