@@ -40,3 +40,13 @@ rev South = North
 rev West = East
 rev East = West
 
+
+-- The constructors in a data declaration can also have an arguments
+data Shape = Circle Float | Rect Float Float
+
+square :: Float -> Shape
+square n = Rect n n
+
+area :: Shape -> Float
+area (Circle r) = pi * r^2
+area (Rect x y) = x * y
