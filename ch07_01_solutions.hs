@@ -91,3 +91,14 @@ altMap f h = map (\x -> if even (fst x) then f (snd x) else h (snd x)) . zip (it
 
 -- > altMap (+10) (+100) [5,4,3,2,1]
 -- > [15,104,13,102,11]
+
+-- Ex. 10
+
+luhnDouble :: Int -> Int
+luhnDouble x = if x > 4 then (x * 2) - 9 else x * 2
+
+luhn :: Int -> Int -> Int -> Int -> Bool
+luhn a b c d = ((luhnDouble a) + b + (luhnDouble c) + d) `mod` 10 == 0
+
+luhn' :: [Int] -> Bool
+luhn' xs = (mod (sum $ altMap luhnDouble id xs) 10) == 0
