@@ -58,3 +58,7 @@ safediv x y = Just (x `mod` y)
 safehead :: [a] -> Maybe a
 safehead [] = Nothing
 safehead xs = Just (head xs)
+
+-- 8.3 New type declarations
+
+newtype Nat = N Int 
