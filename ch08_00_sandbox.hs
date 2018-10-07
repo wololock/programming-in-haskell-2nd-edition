@@ -102,3 +102,9 @@ occurs x (Node a y b) = x == y || occurs x a || occurs x b
 flatten :: Tree a -> [a]
 flatten (Leaf x) = [x]
 flatten (Node a x b) = flatten a ++ [x] ++ flatten b
+
+occurs' :: Ord a => a -> Tree a -> Bool
+occurs' x (Leaf y)                 = x == y
+occurs' x (Node l y r) | x == y    = True
+                       | x < y     = occurs' x l
+                       | otherwise = occurs' x r
