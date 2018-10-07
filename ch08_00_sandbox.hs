@@ -98,3 +98,7 @@ t = Node (Node (Leaf 1) 3 (Leaf 4)) 5 (Node (Leaf 6) 7 (Leaf 9))
 occurs :: Eq a => a -> Tree a -> Bool
 occurs x (Leaf y)    = x == y
 occurs x (Node a y b) = x == y || occurs x a || occurs x b
+
+flatten :: Tree a -> [a]
+flatten (Leaf x) = [x]
+flatten (Node a x b) = flatten a ++ [x] ++ flatten b
