@@ -74,3 +74,10 @@ nat2int (Succ n) = 1 + nat2int n
 int2nat :: Int -> Nat'
 int2nat 0 = Zero
 int2nat n = Succ (int2nat (n - 1))
+
+addNat :: Nat' -> Nat' -> Nat'
+addNat n m = int2nat ((nat2int n) + (nat2int m))
+
+addNat' :: Nat' -> Nat' -> Nat'
+addNat' Zero n     = n
+addNat' (Succ m) n = Succ (addNat' m n)
