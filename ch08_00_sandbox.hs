@@ -81,3 +81,10 @@ addNat n m = int2nat ((nat2int n) + (nat2int m))
 addNat' :: Nat' -> Nat' -> Nat'
 addNat' Zero n     = n
 addNat' (Succ m) n = Succ (addNat' m n)
+
+-- Let's define our own version of built-in type List
+data List a = Nil | Cons a (List a)
+
+len :: List a -> Int
+len Nil         = 0
+len (Cons _ xs) = 1 + len xs
