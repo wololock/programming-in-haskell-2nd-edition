@@ -48,3 +48,22 @@ balanced (Node' a b)                 = abs ((leaves a) - (leaves b)) <= 1
 leaves :: Tree' a -> Int
 leaves (Leaf' _)   = 1
 leaves (Node' a b) = leaves a + leaves b
+
+-- Ex. 4
+half :: [a] -> ([a], [a])
+half [] = ([], [])
+half xs = (take n xs, drop n xs)
+          where
+            n = (length xs) `div` 2
+
+describe :: Show a => Tree' a -> String
+describe (Leaf' a)  = "(Leaf " ++ (show a) ++ ")"
+describe (Node' a b) = "(Node " ++ (describe a) ++ " " ++ (describe b) ++ ")"
+
+balance :: [a] -> Tree' a
+balance (x:[]) = Leaf' x
+balance xs = Node' (balance ys) (balance zs)
+             where
+               hs = half xs
+               ys = fst hs
+               zs = snd hs
