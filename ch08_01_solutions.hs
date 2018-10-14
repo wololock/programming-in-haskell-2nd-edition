@@ -31,3 +31,20 @@ occurs x (Node l y r) = case compare x y of
                           LT -> occurs x l
                           EQ -> True
                           GT -> occurs x r
+
+-- Ex. 3
+data Tree' a = Leaf' a | Node' (Tree' a) (Tree' a)
+
+t2 = Node' (Node' (Leaf' 1) (Leaf' 2)) (Node' (Leaf' 3 ) (Leaf' 4))
+t3 = Node' (Node' (Node' (Leaf' 1) (Leaf' 2)) (Node' (Leaf' 3) (Leaf' 4))) (Leaf' 1)
+t4 = Node' (Node' (Node' (Leaf' 1) (Leaf' 2)) (Node' (Leaf' 3) (Leaf' 4))) (Node' (Node' (Leaf' 5) (Leaf' 6)) (Node' (Leaf' 7) (Leaf' 8)))
+t5 = Node' (Node' (Node' (Leaf' 1) (Leaf' 2)) (Node' (Leaf' 3) (Leaf' 4))) (Node' (Node' (Leaf' 5) (Leaf' 6)) (Leaf' 7))
+
+balanced :: Tree' a -> Bool
+balanced (Leaf' _)                   = True
+balanced (Node' (Leaf' _) (Leaf' _)) = True
+balanced (Node' a b)                 = abs ((leaves a) - (leaves b)) <= 1
+
+leaves :: Tree' a -> Int
+leaves (Leaf' _)   = 1
+leaves (Node' a b) = leaves a + leaves b
