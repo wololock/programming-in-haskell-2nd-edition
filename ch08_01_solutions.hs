@@ -67,3 +67,17 @@ balance xs = Node' (balance ys) (balance zs)
                hs = half xs
                ys = fst hs
                zs = snd hs
+
+-- Ex. 5
+
+data Expr = Val Int | Add Expr Expr
+
+expr1 = Add (Add (Val 1) (Val 2)) (Add (Val 3) (Val 4))
+
+folde :: (Int -> a) -> (a -> a -> a) -> Expr -> a
+folde f _ (Val x)   = f x
+folde f g (Add x y) = g (folde f g x) (folde f g y)
+
+-- folde id (\x y -> x + y) expr1
+-- 10
+
