@@ -73,6 +73,8 @@ balance xs = Node' (balance ys) (balance zs)
 data Expr = Val Int | Add Expr Expr
 
 expr1 = Add (Add (Val 1) (Val 2)) (Add (Val 3) (Val 4))
+expr2 = Add (Add (Val 4) (Val 4)) (Add (Val 5) (Val 5))
+expr3 = Add (Add (Val 1) (Val 2)) (Val 3)
 
 folde :: (Int -> a) -> (a -> a -> a) -> Expr -> a
 folde f _ (Val x)   = f x
@@ -81,3 +83,20 @@ folde f g (Add x y) = g (folde f g x) (folde f g y)
 -- folde id (\x y -> x + y) expr1
 -- 10
 
+-- Ex. 6
+
+eval :: Expr -> Int
+eval = folde id (\x y -> x + y)
+
+-- eval expr1
+-- 10
+
+size :: Expr -> Int
+size = folde (\x -> 1) (\x y -> x + y)
+
+-- size expr1
+-- 4
+-- size expr2
+-- 4
+-- size expr3
+-- 3
