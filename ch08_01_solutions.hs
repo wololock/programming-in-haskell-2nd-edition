@@ -1,3 +1,5 @@
+ {-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
+
 module Chapter_08_Solutions where
 
 -- Ex. 1
@@ -100,3 +102,10 @@ size = folde (\x -> 1) (\x y -> x + y)
 -- 4
 -- size expr3
 -- 3
+
+-- Ex. 7
+
+--instance Eq a => Eq (Maybe a) where
+--    Nothing == Nothing = True
+--    Just a == Just b   = a == b
+
