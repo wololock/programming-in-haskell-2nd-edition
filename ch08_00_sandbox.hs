@@ -116,7 +116,9 @@ data Prop = Const Bool
             | Var Char
             | Not Prop
             | And Prop Prop
+            | Or Prop Prop
             | Imply Prop Prop
+            | Equiv Prop Prop
 
 
 p1 :: Prop
@@ -137,6 +139,18 @@ p5 = (Var 'A') `And` (Not (Var 'A'))
 p6 :: Prop
 p6 = (Var 'A' `And` (Var 'A' `Imply` Var 'B')) `Imply` Var 'B'
 
+p7 :: Prop
+p7 = (Var 'A') `Imply` ((Var 'A') `Or` (Var 'B'))
+
+p8 :: Prop
+p8 = (Var 'B') `Imply` ((Var 'A') `Or` (Var 'B'))
+
+p9 :: Prop
+p9 = (((Var 'A') `Or` (Var 'B'))) `Equiv` ((Var 'B') `Or` (Var 'A'))
+
+p10 :: Prop
+p10 = (((Var 'A') `And` (Var 'B'))) `Equiv` ((Var 'B') `And` (Var 'A'))
+
 type Subst = Assoc Char Bool
 
 eval :: Subst -> Prop -> Bool
@@ -144,14 +158,18 @@ eval _ (Const b)   = b
 eval s (Var x)     = find x s
 eval s (Not p)     = not (eval s p)
 eval s (And p q)   = eval s p && eval s q
+eval s (Or p q)    = eval s p || eval s q
 eval s (Imply p q) = eval s p <= eval s q
+eval s (Equiv p q) = eval s p == eval s q
 
 vars :: Prop -> [Char]
 vars (Const _)   = []
 vars (Var x)     = [x]
 vars (Not p)     = vars p
 vars (And p q)   = vars p ++ vars q
+vars (Or p q)    = vars p ++ vars q
 vars (Imply p q) = vars p ++ vars q
+vars (Equiv p q) = vars p ++ vars q
 
 bools :: Int -> [[Bool]]
 bools 0 = [[]]
