@@ -1,5 +1,3 @@
-module Chapter_09_Sandbox where
-
 -- The coundown problem
 
 data Op = Add | Sub | Mul | Div
@@ -97,5 +95,5 @@ ops = [Add, Sub, Mul, Div]
 solutions :: [Int] -> Int -> [Expr]
 solutions ns n = [e | ns' <- choices ns, e <- exprs ns', eval e == [n]]
 
-
-
+main :: IO ()
+main = print (length $ solutions [1,3,7,10,25,50] 765)
