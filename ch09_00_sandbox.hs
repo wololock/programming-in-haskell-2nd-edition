@@ -97,5 +97,22 @@ ops = [Add, Sub, Mul, Div]
 solutions :: [Int] -> Int -> [Expr]
 solutions ns n = [e | ns' <- choices ns, e <- exprs ns', eval e == [n]]
 
+-- Improvements
+
+type Result = (Expr, Int)
+
+results :: [Int] -> [Result]
+results []  = []
+results [n] = [(Val n, n) | n > 0]
+results ns  = [res | (ls,rs) <- split ns,
+                         lx  <- results ls,
+                         ry  <- results rs,
+                         res <- combine' lx ry]
+
+combine' :: Result -> Result -> [Result]
+combine' (l,x) (r,y) = [(App o l r, apply o x y) | o <- ops, valid o x y]
+
+solutions' :: [Int] -> Int -> [Expr]
+solutions' ns n = [e | ns' <- choices ns, (e,m) <- results ns', m == n]
 
 
