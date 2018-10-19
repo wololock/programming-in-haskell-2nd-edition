@@ -14,10 +14,10 @@ instance Show Op where
 -- Check if application of an operator to two positive natural numbers
 -- gives another positive natural number
 valid :: Op -> Int -> Int -> Bool
-valid Add _ _ = True
+valid Add x y = x <= y
 valid Sub x y = x > y
-valid Mul _ _ = True
-valid Div x y = x `mod` y == 0
+valid Mul x y = x /= 1 && y /= 1 && x <= y
+valid Div x y = y /= 1 && x `mod` y == 0
 
 apply :: Op -> Int -> Int -> Int
 apply Add x y = x + y
@@ -114,5 +114,4 @@ combine' (l,x) (r,y) = [(App o l r, apply o x y) | o <- ops, valid o x y]
 
 solutions' :: [Int] -> Int -> [Expr]
 solutions' ns n = [e | ns' <- choices ns, (e,m) <- results ns', m == n]
-
 
