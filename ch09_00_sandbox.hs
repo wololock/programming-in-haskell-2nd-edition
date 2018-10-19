@@ -51,3 +51,18 @@ eval (App o l r) = [apply o x y | x <- eval l,
                                   y <- eval r,
                                   valid o x y]
 
+subs :: [a] -> [[a]]
+subs []     = [[]]
+subs (x:xs) = yss ++ map (x:) yss
+               where 
+                yss = subs xs
+
+interleave :: a -> [a] -> [[a]]
+interleave x []     = [[x]]
+interleave x (y:ys) = (x:y:ys) : map (y:) (interleave x ys)
+
+perms :: [a] -> [[a]]
+perms []     = [[]]
+perms (x:xs) = concat $ map (interleave x) (perms xs)
+
+
