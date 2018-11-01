@@ -66,6 +66,9 @@ perms (x:xs) = concat $ map (interleave x) (perms xs)
 choices :: [a] -> [[a]]
 choices = concat . map perms . subs
 
+choices' :: [a] -> [[a]]
+choices' xs = [x' | x <- subs xs, x' <- perms x]
+
 solution :: Expr -> [Int] -> Int -> Bool
 solution e ns n = elem (values e) (choices ns) && eval e == [n]
 
