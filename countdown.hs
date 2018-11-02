@@ -69,6 +69,18 @@ choices = concat . map perms . subs
 choices' :: [a] -> [[a]]
 choices' xs = [x' | x <- subs xs, x' <- perms x]
 
+-- Ex. 2
+removeFirst :: Eq a => a -> [a] -> [a]
+removeFirst _ []                 = []
+removeFirst x (y:ys) | x == y    = ys
+                     | otherwise = y : removeFirst x ys
+
+isChoice :: Eq a => [a] -> [a] -> Bool
+isChoice [] _ = True
+isChoice xs (y:ys) = isChoice (removeFirst y xs) ys
+
+--                      
+
 solution :: Expr -> [Int] -> Int -> Bool
 solution e ns n = elem (values e) (choices ns) && eval e == [n]
 
