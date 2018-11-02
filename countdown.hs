@@ -76,7 +76,8 @@ removeFirst x (y:ys) | x == y    = ys
                      | otherwise = y : removeFirst x ys
 
 isChoice :: Eq a => [a] -> [a] -> Bool
-isChoice [] _ = True
+isChoice [] _      = True
+isChoice xs []     = False
 isChoice xs (y:ys) = isChoice (removeFirst y xs) ys
 
 --                      
