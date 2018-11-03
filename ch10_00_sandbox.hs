@@ -13,4 +13,6 @@ putStr' []     = return ()
 putStr' (x:xs) = do putChar x
                     putStr' xs
 
-
+putStrLn' :: String -> IO ()
+putStrLn' xs = do putStr' xs
+                  putChar '\n'
