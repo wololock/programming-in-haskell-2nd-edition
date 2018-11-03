@@ -31,7 +31,7 @@ hangman :: IO ()
 hangman = do putStrLn "Think of a word:"
              word <- sgetLine
              putStrLn "Try to guess it:"
-             play word
+             play word []
 
 sgetLine :: IO String
 sgetLine = do x <- getCh
@@ -49,14 +49,14 @@ getCh = do hSetEcho stdin False
            hSetEcho stdin True
            return x
 
-play :: String -> IO ()
-play word = do putStr "?"
-               guess <- getLine
-               if guess == word then
-                 putStrLn "You got it!"
-               else
-                 do putStrLn (match word guess)
-                    play word
+play :: String -> [String] -> IO ()
+play word guesses = do putStr "?: "
+                       guess <- getLine
+                       if guess == word then
+                         putStrLn "You got it!"
+                       else
+                         do putStrLn (match word (concat $ guess:guesses))
+                            play word (guess:guesses)
 
 match :: String -> String -> String
 match xs ys = [if elem x ys then x else '-' | x <- xs]
