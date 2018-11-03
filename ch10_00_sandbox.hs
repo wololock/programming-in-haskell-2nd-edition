@@ -1,6 +1,7 @@
 module Chapter_10_Sandbox where
 
 import System.IO
+import Data.List
 
 getLine' :: IO String
 getLine' = do x <- getChar
@@ -49,14 +50,16 @@ getCh = do hSetEcho stdin False
            hSetEcho stdin True
            return x
 
-play :: String -> [String] -> IO ()
-play word guesses = do putStr "?: "
+play :: String -> String -> IO ()
+play word letters = do putStr "?: "
                        guess <- getLine
+                       let ls = nub $ guess ++ letters
                        if guess == word then
                          putStrLn "You got it!"
-                       else
-                         do putStrLn (match word (concat $ guess:guesses))
-                            play word (guess:guesses)
+                       else                       
+                         do putStrLn (match word ls)
+                            play word ls
+
 
 match :: String -> String -> String
 match xs ys = [if elem x ys then x else '-' | x <- xs]
