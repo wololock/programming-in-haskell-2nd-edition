@@ -236,9 +236,8 @@ adder :: IO ()
 adder = do putStr "How many numbers? "
            n <- readNumber
            xs <- sequence [readNumber | _ <- [1..n]]
-           x <- return (sum xs)
-           putStr "The total is "
-           putStrLn (show x)
+           putStrLn $ "The total is " ++ (show $ sum xs) 
+          
 
            
            
