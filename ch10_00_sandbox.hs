@@ -215,4 +215,13 @@ b1 = [(1,1), (5,4), (12,3), (12,4), (2,3), (5,5), (6,7), (5,4),(4,5), (12,4), (1
 putStr'' :: String -> IO ()
 putStr'' xs = sequence_ [putChar x | x <- xs]
 
+-- Ex. 2
+-- Using recursion, define a version of putBoard :: Board -> IO () that displays
+-- nim boards of any size, rather than being specific to boards with just five rows of
+-- stars. Hint: first define an auxiliary function that takes the current row number as an
+-- additional argument.
+
+putBoard' :: Board -> IO ()
+putBoard' xs = sequence_ [putRow n x | (n,x) <- zip [1..] xs]
+
 
