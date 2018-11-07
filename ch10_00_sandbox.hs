@@ -207,3 +207,12 @@ life b = do cls
 
 b1 :: Board'
 b1 = [(1,1), (5,4), (12,3), (12,4), (2,3), (5,5), (6,7), (5,4),(4,5), (12,4), (11,3), (11,4), (8,8), (7,8), (8,9), (7,9), (7,7), (6,7), (6,6), (5,6)]
+
+-- Ex. 1
+-- Redefine putStr :: String -> IO () using a list comprehension and the library
+-- function sequence_ :: [IO a] -> IO () .
+
+putStr'' :: String -> IO ()
+putStr'' xs = sequence_ [putChar x | x <- xs]
+
+
