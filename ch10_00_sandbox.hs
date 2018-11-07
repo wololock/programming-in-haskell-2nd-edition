@@ -228,19 +228,18 @@ putBoard' xs = sequence_ [putRow n x | (n,x) <- zip [1..] xs]
 -- Define an action adder :: IO () that reads a given number of integers from the
 -- keyboard, one per line, and displays their sum.
 
-readNumbers :: Int -> Int -> IO (Int)
-readNumbers total 0         = return (total)
-readNumbers total remaining = do line <- getLine
-                                 n <- return (read line :: Int)
-                                 readNumbers (total + n) (remaining - 1)
+readNumber :: IO (Int)
+readNumber = do n <- getLine
+                return (read n :: Int)
 
 adder :: IO ()
 adder = do putStr "How many numbers? "
-           line <- getLine
-           n <- return (read line :: Int)
-           x <- readNumbers 0 n
+           n <- readNumber
+           xs <- sequence [readNumber | _ <- [1..n]]
+           x <- return (sum xs)
            putStr "The total is "
            putStrLn (show x)
+
            
            
            
