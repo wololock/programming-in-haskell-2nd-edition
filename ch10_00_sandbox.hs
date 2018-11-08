@@ -239,7 +239,38 @@ adder = do putStr "How many numbers? "
            putStrLn $ "The total is " ++ (show $ sum xs) 
           
 
-           
+-- Ex. 6
+-- Using getCh , define an action readLine :: IO String that behaves in the same
+-- way as getLine , except that it also permits the delete key to be used to remove
+-- characters. Hint: the delete character is ’\DEL’ , and the control character for moving
+-- the cursor back one space is ’\b’ .           
+
+removeErased :: String -> String 
+removeErased = foldl (\xs x -> if x == '\DEL' then init xs else xs ++ [x]) ""
+
+erase :: IO ()
+erase = do putChar '\b'
+           putChar ' '
+           putChar '\b'
+
+readChars :: IO String
+readChars = do c <- getCh
+               xs <- case (c) of
+                 '\n'   -> do newline
+                              return []
+                 '\DEL' -> do erase
+                              cs <- readChars
+                              return (c:cs)
+                 _      -> do putChar c
+                              cs <- readChars
+                              return (c:cs)
+               return xs                             
+
+readLine :: IO String
+readLine = do xs <- readChars       
+              return (removeErased xs)
+
+
            
            
 
