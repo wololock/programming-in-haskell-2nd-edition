@@ -63,7 +63,7 @@ play word letters = do putStr "?: "
 
 
 match :: String -> String -> String
-match xs ys = [if elem x ys then x else '-' | x <- xs]
+match xs ys = [if x `elem` ys then x else '-' | x <- xs]
 
 
 -- Game of nim example
@@ -124,7 +124,7 @@ nim board player = do newline
                       else
                         do newline
                            putStr "Player "
-                           putStrLn (show player)
+                           print player
                            row <- getDigit "Enter a row number: "
                            num <- getDigit "Stars to remove: "
                            if valid board row num then 
@@ -164,7 +164,7 @@ showCells :: Board' -> IO ()
 showCells b = sequence_ [writeAt p "█" | p <- b]
 
 isAlive :: Board' -> Pos -> Bool
-isAlive b p = elem p b
+isAlive b p = p `elem` b
 
 isEmpty :: Board' -> Pos -> Bool
 isEmpty b p = not (isAlive b p)
@@ -182,10 +182,10 @@ liveneighbs :: Board' -> Pos -> Int
 liveneighbs b = length . filter (isAlive b) . neighbs
 
 survivors :: Board' -> [Pos]
-survivors b = [p | p <- b, elem (liveneighbs b p) [2,3]]
+survivors b = [p | p <- b, liveneighbs b p `elem` [2,3]]
 
 births :: Board' -> [Pos]
-births b = [p | p <- rmdups (concat (map neighbs b)), 
+births b = [p | p <- rmdups (concatMap neighbs b), 
                 isEmpty b p, 
                 liveneighbs b p == 3]
 
@@ -228,7 +228,7 @@ putBoard' xs = sequence_ [putRow n x | (n,x) <- zip [1..] xs]
 -- Define an action adder :: IO () that reads a given number of integers from the
 -- keyboard, one per line, and displays their sum.
 
-readNumber :: IO (Int)
+readNumber :: IO Int
 readNumber = do n <- getLine
                 return (read n :: Int)
 
@@ -236,7 +236,7 @@ adder :: IO ()
 adder = do putStr "How many numbers? "
            n <- readNumber
            xs <- sequence [readNumber | _ <- [1..n]]
-           putStrLn $ "The total is " ++ (show $ sum xs) 
+           putStrLn $ "The total is " ++ show (sum xs) 
           
 
 -- Ex. 6
@@ -255,7 +255,7 @@ erase = do putChar '\b'
 
 readChars :: IO String
 readChars = do c <- getCh
-               xs <- case (c) of
+               case c of
                  '\n'   -> do newline
                               return []
                  '\DEL' -> do erase
@@ -263,8 +263,7 @@ readChars = do c <- getCh
                               return (c:cs)
                  _      -> do putChar c
                               cs <- readChars
-                              return (c:cs)
-               return xs                             
+                              return (c:cs)                      
 
 readLine :: IO String
 readLine = do xs <- readChars       
