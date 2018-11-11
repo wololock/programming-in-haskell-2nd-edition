@@ -194,4 +194,9 @@ play' g p | wins O g = putStrLn "Player O wins!\n"
 nodes :: Tree a -> Int
 nodes (Node _ ts) = 1 + sum (map nodes ts)
 
+depths :: Tree a -> Int
+depths (Node _ []) = 0
+depths (Node _ ts) = 1 + maximum (map depths ts)
+
+t1 = Node 1 [Node 2 [Node 4 [Node 6 [], Node 7 []], Node 5 [Node 8 [Node 10 [Node 12 [Node 14 [Node 16 []], Node 15 []], Node 13 []], Node 11 []], Node 9 []]], Node 3 []]
 
