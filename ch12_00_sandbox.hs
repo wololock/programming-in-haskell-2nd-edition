@@ -39,3 +39,10 @@ ap1 = pure (+1) <*> Just 3
 ap2 = pure (map (+2)) <*> (Just [1,2,3,4])
 ap3 = pure (zip) <*> (Just [1..]) <*> (Just ['a', 'b', 'c', 'd'])
 
+prods :: [Int] -> [Int] -> [Int]
+prods xs ys = [x * y | x <- xs, y <- ys]
+
+prods' :: [Int] -> [Int] -> [Int]
+prods' xs ys = pure (*) <*> xs <*> ys
+
+
