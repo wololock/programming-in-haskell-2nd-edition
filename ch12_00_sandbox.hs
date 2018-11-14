@@ -45,4 +45,6 @@ prods xs ys = [x * y | x <- xs, y <- ys]
 prods' :: [Int] -> [Int] -> [Int]
 prods' xs ys = pure (*) <*> xs <*> ys
 
-
+getChars :: Int -> IO String
+getChars 0 = return []
+getChars n = pure (:) <*> getChar <*> getChars (n-1)
