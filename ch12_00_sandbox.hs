@@ -48,3 +48,6 @@ prods' xs ys = pure (*) <*> xs <*> ys
 getChars :: Int -> IO String
 getChars 0 = return []
 getChars n = pure (:) <*> getChar <*> getChars (n-1)
+
+getChars' :: Int -> IO String
+getChars' n = sequenceA (replicate n getChar)
