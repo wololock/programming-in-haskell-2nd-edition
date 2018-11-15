@@ -51,3 +51,26 @@ getChars n = pure (:) <*> getChar <*> getChars (n-1)
 
 getChars' :: Int -> IO String
 getChars' n = sequenceA (replicate n getChar)
+
+-- 12.3 Monads
+
+data Expr = Val Int | Div Expr Expr
+
+eval :: Expr -> Int
+eval (Val n)   = n
+eval (Div x y) = eval x `div` eval y
+
+safediv :: Int -> Int -> Maybe Int
+safediv _ 0 = Nothing
+safediv x y = Just (x `div` y)
+
+eval' :: Expr -> Maybe Int
+eval' (Val n)   = Just n
+eval' (Div x y) = case eval' x of
+                    Nothing -> Nothing
+                    Just n -> case eval' y of
+                                Nothing -> Nothing
+                                Just m -> n `safediv` m
+
+
+
