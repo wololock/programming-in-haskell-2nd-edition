@@ -88,4 +88,12 @@ eval''' (Div x y) = do n <- eval''' x
                        m <- eval''' y
                        n `safediv` m
 
+--instance Monad [] where
+--    -- (>>=) :: [a] -> (a -> [b]) -> [b]
+--    xs >>= f = [f x | x <- xs]
+
+pairs :: [a] -> [b] -> [(a,b)]
+pairs xs ys = do x <- xs
+                 y <- ys
+                 return (x,y)
 
