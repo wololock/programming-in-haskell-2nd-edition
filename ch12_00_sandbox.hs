@@ -72,5 +72,20 @@ eval' (Div x y) = case eval' x of
                                 Nothing -> Nothing
                                 Just m -> n `safediv` m
 
+-- Implementing eval in applicative style
+--(>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+--mx >>= f = case mx of
+--             Nothing -> Nothing
+--             Just x  -> f x
+
+eval'' :: Expr -> Maybe Int
+eval'' (Val n)   = Just n
+eval'' (Div x y) = eval'' x >>= \n -> eval'' y >>= \m -> n `safediv` m
+
+eval''' ::Expr -> Maybe Int
+eval''' (Val n)   = Just n
+eval''' (Div x y) = do n <- eval''' x
+                       m <- eval''' y
+                       n `safediv` m
 
 
