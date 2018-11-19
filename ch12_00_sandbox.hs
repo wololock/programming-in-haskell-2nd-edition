@@ -172,3 +172,9 @@ filterM p (x:xs) = do b  <- p x
                       ys <- filterM p xs
                       return (if b then x:ys else ys)
 
+
+join :: Monad m => m (m a) -> m a
+join mmx = do mx <- mmx
+              x  <- mx
+              return x
+
