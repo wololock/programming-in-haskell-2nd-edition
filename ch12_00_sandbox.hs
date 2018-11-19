@@ -152,3 +152,9 @@ mlabel (Node l r) = do l' <- mlabel l
                        return (Node l' r')
 
 
+mapM' :: Monad m => (a -> m b) -> [a] -> m [b]
+mapM' f []     = return []
+mapM' f (x:xs) = do y  <- f x
+                    ys <- mapM f xs
+                    return (y:ys)
+
