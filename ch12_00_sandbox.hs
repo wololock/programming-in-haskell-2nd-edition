@@ -1,5 +1,7 @@
 module Chapter_12_Sandbox where
 
+import Data.Char
+
 inc :: [Int] -> [Int]
 inc []     = []
 inc (n:ns) = n+1 : inc ns
@@ -157,4 +159,10 @@ mapM' f []     = return []
 mapM' f (x:xs) = do y  <- f x
                     ys <- mapM f xs
                     return (y:ys)
+
+
+conv :: Char -> Maybe Int
+conv c | isDigit c = Just (digitToInt c)
+       | otherwise = Nothing
+       
 
