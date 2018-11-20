@@ -178,3 +178,15 @@ join mmx = do mx <- mmx
               x  <- mx
               return x
 
+
+-- Ex. 1: Define an instance of the have data in their nodes.
+data Tree' a = Leaf' | Node' (Tree' a) a (Tree' a)
+               deriving Show
+
+instance Functor Tree' where
+    -- fmap :: (a -> b) -> Tree a -> Tree b
+    fmap g Leaf'         = Leaf'
+    fmap g (Node' l x r) = Node' (fmap g l) (g x) (fmap g r)
+
+
+
