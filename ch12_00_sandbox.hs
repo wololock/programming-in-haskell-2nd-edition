@@ -188,5 +188,14 @@ instance Functor Tree' where
     fmap g Leaf'         = Leaf'
     fmap g (Node' l x r) = Node' (fmap g l) (g x) (fmap g r)
 
+-- Ex. 2: Complete the following instance declaration to make the partially-applied function
+--        type (a ->) into a functor:
+--        instance Functor ((->) a) where
+--        ...
+--        Hint: first write down the type of fmap , and then think if you already know a library
+--        function that has this type.  
 
+instance Functor ((->) a) where
+    -- fmap :: (b -> c) -> (a -> b) -> (a -> c)
+    fmap = (.)
 
