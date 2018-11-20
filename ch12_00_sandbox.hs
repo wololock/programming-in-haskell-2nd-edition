@@ -195,7 +195,18 @@ instance Functor Tree' where
 --        Hint: first write down the type of fmap , and then think if you already know a library
 --        function that has this type.  
 
-instance Functor ((->) a) where
-    -- fmap :: (b -> c) -> (a -> b) -> (a -> c)
-    fmap = (.)
+--instance Functor ((->) a) where
+--    -- fmap :: (b -> c) -> (a -> b) -> (a -> c)
+--    fmap = (.)
+
+
+-- Ex. 3: Define an instance of the Applicative class for the type (a ->) . If you are familiar
+--        with combinatory logic, you might recognise pure and <*> for this type as being the
+--        well-known K and S combinators.
+
+--instance Applicative ((->) a) where
+--    -- pure :: a -> (b -> a)
+--    pure = const
+--    -- (<*>) :: (a -> b -> c) -> (a -> b) -> (a -> c)
+--    g <*> f = \x -> g x (f x)
 
