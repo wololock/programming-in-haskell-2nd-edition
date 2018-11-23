@@ -231,6 +231,17 @@ instance Applicative ZipList where
     (Z gs) <*> (Z xs) = Z [g x | (g,x) <- zip gs xs]
 
 
-                           
+-- Ex. 7: Given the following type of expressions
+--        data Expr a = Var a | Val Int | Add (Expr a) (Expr a)
+--        deriving Show
+--        that contain variables of some type a , show how to make this type into instances of
+--        the Functor , Applicative and Monad classes. With the aid of an example, explainwhat the >>= operator for this type does.
+
+data Expr' a = Var' a | Val' Int | Add' (Expr' a) (Expr' a)
+               deriving Show
+
+instance Functor Expr' where
+    fmap g (Var' x)   = Var' (g x)
+    fmap g (Add' a b) = Add' (fmap g a) (fmap g b)
 
 
