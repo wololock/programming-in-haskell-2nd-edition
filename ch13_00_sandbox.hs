@@ -81,5 +81,22 @@ string (x:xs) = do char x
                    return (x:xs)
 
 
-                   
+ident :: Parser String
+ident = do x <- lower
+           xs <- many alphanum
+           return (x:xs)
+
+nat :: Parser Int
+nat = do xs <- some digit
+         return (read xs)
+
+space :: Parser ()
+space = do many (sat isSpace) 
+           return ()
+
+int :: Parser Int
+int = do char '-' 
+         n <- nat
+         return (-n)
+    <|> nat     
 
