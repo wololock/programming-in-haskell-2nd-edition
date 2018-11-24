@@ -98,5 +98,38 @@ int :: Parser Int
 int = do char '-' 
          n <- nat
          return (-n)
-    <|> nat     
+    <|> nat
+    
+
+token :: Parser a -> Parser a
+token p = do space 
+             v <- p
+             space 
+             return v
+
+-- Using token , we can now define parsers that ignore spacing around identifiers, natural
+-- numbers, integers and special symbols:
+
+identifier :: Parser String
+identifier = token ident
+
+natural :: Parser Int
+natural = token nat
+
+integer :: Parser Int
+integer = token int
+
+symbol :: String -> Parser String
+symbol xs = token (string xs)
+
+-- For example, using these primitives a parser for a non-empty list of natural numbers that
+-- ignores spacing around tokens can be defined as follows:
+
+nats :: Parser [Int]
+nats = do symbol "["
+          n <- natural
+          ns <- many (do symbol ","; natural)
+          symbol "]"
+          return (n:ns)
+
 
