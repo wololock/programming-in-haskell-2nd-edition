@@ -50,3 +50,36 @@ instance Alternative Parser where
                            []        -> parse q inp
                            [(v,out)] -> [(v,out)])
 
+-- 13.6 Derived primitives
+
+sat :: (Char -> Bool) -> Parser Char
+sat p = do x <- item
+           if p x then return x else empty
+
+digit :: Parser Char
+digit = sat isDigit
+
+lower :: Parser Char
+lower = sat isLower
+
+upper :: Parser Char
+upper = sat isUpper
+
+letter :: Parser Char
+letter = sat isAlpha
+
+alphanum :: Parser Char
+alphanum = sat isAlphaNum
+
+char :: Char -> Parser Char
+char x = sat (== x)
+
+string :: String -> Parser String
+string []     = return []
+string (x:xs) = do char x
+                   string xs
+                   return (x:xs)
+
+
+                   
+
