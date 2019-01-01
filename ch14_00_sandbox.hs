@@ -137,3 +137,10 @@ testTravesableTree = do putStr "sequenceA (Node (Leaf (Just 1)) (Leaf (Just 2)))
 --
 --        -- mappend :: (a,b) -> (a,b) -> (a,b)
 --        (x1,y1) `mappend` (x2,y2) = (x1 <> x2, y1 <> y2)
+
+-- Ex. 5
+-- Using foldMap , define a generic version of the higher-order function filter on lists
+-- that can be used with any foldable type:
+
+filterF :: Foldable t => (a -> Bool) -> t a -> [a]
+filterF g = filter g . foldMap (\x -> [x])
