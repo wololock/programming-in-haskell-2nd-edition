@@ -113,3 +113,15 @@ traverse' g (x:xs) = pure (:) <*> g x <*> traverse' g xs
 dec :: Int -> Maybe Int
 dec n = if n > 0 then Just (n-1) else Nothing
 
+instance Traversable Tree where
+    -- traverse :: Applicative f => (a -> f b) -> Tree a -> f (Tree b)
+    traverse g (Leaf x)   = pure Leaf <*> g x
+    traverse g (Node l r) = pure Node <*> traverse g l <*> traverse g r
+
+instance Functor Tree where
+    fmap g (Leaf x)   = Leaf (g x)
+    fmap g (Node l r) = Node (fmap g l) (fmap g r)
+
+testTravesableTree :: IO ()
+testTravesableTree = do putStr "sequenceA (Node (Leaf (Just 1)) (Leaf (Just 2))) == "
+                        print $ sequenceA (Node (Leaf (Just 1)) (Leaf (Just 2)))
