@@ -101,3 +101,6 @@ testFoldableTree = do putStr "t2 == "
                       putStr "toList t2 == "
                       print $ toList t2
 
+average :: Foldable t => t Int -> Int
+average ns = sum ns `div` length ns
+
