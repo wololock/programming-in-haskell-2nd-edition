@@ -83,3 +83,21 @@ ex2 = getProduct (foldMap Product [1..10])
 t2 :: Tree Int
 t2 = Node (Node (Leaf 1) (Node (Node (Leaf 3) (Leaf 4)) (Leaf 2))) (Node (Node (Leaf 6) (Node (Node (Leaf 8) (Leaf 9)) (Leaf 7))) (Leaf 5))
 
+testFoldableTree :: IO ()
+testFoldableTree = do putStr "t2 == "
+                      print t2
+                      putStr "length t2 == "
+                      print $ length t2
+                      putStr "null t2 == "
+                      print $ null t2
+                      putStr "elem 3 t2 == "
+                      print $ elem 3 t2
+                      putStr "maximum t2 == "
+                      print $ maximum t2
+                      putStr "minimum t2 == "
+                      print $ minimum t2
+                      putStr "foldr1 (+) t2 == "
+                      print $ foldr1 (+) t2
+                      putStr "toList t2 == "
+                      print $ toList t2
+
