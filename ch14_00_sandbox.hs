@@ -104,3 +104,12 @@ testFoldableTree = do putStr "t2 == "
 average :: Foldable t => t Int -> Int
 average ns = sum ns `div` length ns
 
+-- 14.3 Traversables
+
+traverse' :: (a -> Maybe b) -> [a] -> Maybe [b]
+traverse' g []     = pure []
+traverse' g (x:xs) = pure (:) <*> g x <*> traverse' g xs
+
+dec :: Int -> Maybe Int
+dec n = if n > 0 then Just (n-1) else Nothing
+
